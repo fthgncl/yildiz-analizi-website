@@ -36,9 +36,9 @@
 
 /* Split the screen in half */
 .split {
-  height: 100%;
+  height: 900px;
   width: 50%;
-  position: fixed;
+  position: absolute;
   top: 50px;
   overflow-x: hidden;
   padding-top: 20px;
@@ -75,9 +75,29 @@
 
 /* fthgncl */
 
+#veri_analiz_formu{
+  position: relative;
+  top: 20px;
+  height: 90%;
+  left: 10%;
+  width: 80%;
+  text-align: center;
+  color: rgb(255, 255, 255);
+}
+
 .ustBaslik {
   position:relative;
   text-align: center;
   color: rgb(255, 255, 255);
   top:15px;
+}
+
+.formCerceve {
+  position:relative;
+  left: 10%;
+  width: 80%;
+  height: 700px;
+  top: 60px;
+  border-radius: 50px;
+  background-color: rgba(0, 0, 0, 0.4);
 }

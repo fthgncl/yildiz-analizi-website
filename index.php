@@ -17,10 +17,8 @@
     <h1 class="ustBaslik">Yıldız Analiz Formu</h1>
 
     <div class="split left">
-        <div class="centered">
-            <div>
-                <?php includePhpFile("form.php"); ?>
-            </div>
+        <div>
+            <?php includePhpFile("form.php"); ?>
         </div>
     </div>
 
