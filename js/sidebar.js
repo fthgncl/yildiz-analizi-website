@@ -14,9 +14,3 @@ menuBtns.forEach((menuBtn) => {
 overlay.addEventListener("click", () => {
   navBar.classList.remove("open");
 });
-
-login.addEventListener("click",loginFormGoster);
-logout.addEventListener("click",logoutIslemleri);
-
-login.style.display = !gencalizadeToken?"block":"none";
-logout.style.display = gencalizadeToken?"block":"none";

@@ -23,9 +23,3 @@
   </div>
 </nav>
 <section class="overlay"></section>
-
-<?php
-addFile("css", "apps/sweetalert2/sweetalert2.min.css");
-addFile("script", "apps/sweetalert2/sweetalert2.all.min.js");
-addFile("script", "/js/login.js");
-?>
