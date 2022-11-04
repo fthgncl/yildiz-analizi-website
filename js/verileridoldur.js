@@ -760,3 +760,4 @@ gozlem_verileri.value += "C1S U     226   224   226 03:53:52\n";
 gozlem_verileri.value += "C1S B     304   303   305 03:54:09\n";
 gozlem_verileri.value += "C1S V     320   317   313 03:54:26";
 
+gozlem_analiz_dugmesi.click();

@@ -9,6 +9,8 @@
     <?php
     addFile("css", "./css/tasarimlar.css");
     addFile("css", "https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css");
+    addFile("script","https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.js");
+    addFile("script", "./js/chart.js");
     ?>
 </head>
 
@@ -23,8 +25,7 @@
     </div>
 
     <div class="split right">
-        <div class="centered">
-        </div>
+            <canvas id="grafik-kadir-havakutlesi"></canvas>
     </div>
 
 </body>

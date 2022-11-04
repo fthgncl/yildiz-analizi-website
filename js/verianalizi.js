@@ -18,12 +18,10 @@ function analizIslemleri() {
     olcumler = yildizZamaniHesapla(olcumler);       // Yıldız zamanı hesaplandı.
     olcumler = havaKutlesiHesapla(olcumler);        // Hava Kütlesi hesaplandı.
     olcumler = mukayeseKadirHesapla(olcumler);      // Mukayese yıldızının kadir değerleri hesaplandı.
-
-
     console.log(olcumler);
+
+    grafikIslemleri();
 }
-
-
 
 
 function verileriCek() {
@@ -37,14 +35,12 @@ function verileriCek() {
 
         const ortalama = (parseFloat(olcum[2]) + parseFloat(olcum[3]) + parseFloat(olcum[4])) / 3;
         let obje = {};
-        filtreler.forEach(filtre => {
-            obje.yildizSembolu = olcum[0]
-            obje[olcum[1]] = "";
-            obje[olcum[1]] = {
-                parlaklik: ortalama,
-                saat: olcum[5]
-            }
-        });
+        obje.yildizSembolu = olcum[0]
+        obje[olcum[1]] = "";
+        obje[olcum[1]] = {
+            parlaklik: ortalama,
+            saat: olcum[5]
+        }
 
         return obje;
     });
@@ -100,9 +96,9 @@ function verileriDuzenle(olcumler) {
 }
 
 function gokParlakliklariniCikart(olcumler) {
-    
+
     olcumler = gokParlagiAnalizFormatinaCevir(olcumler);
-    
+
     let gokParlakligindanArindirilmisOlcumler = [];
     let islemeAlinacakOlcumler = [];
 
@@ -126,35 +122,35 @@ function gokParlakliklariniCikart(olcumler) {
     }
 
 
-    function gokParlagiAnalizFormatinaCevir(olcumler) {    
+    function gokParlagiAnalizFormatinaCevir(olcumler) {
         for (let i = 0; i < olcumler.length - 1; i++) {
-    
+
             let sembol1 = olcumler[i].yildizSembolu;
             let sembol2 = olcumler[i + 1].yildizSembolu;
-    
+
             if (yildizSembolleriAyniMi(sembol1, sembol2))
                 if (verileriYerDegistirmekGerekiyorMu(sembol1, sembol2)) {
                     let aparatObje = olcumler[i];
                     olcumler[i] = olcumler[i + 1];
                     olcumler[i + 1] = aparatObje;
                 }
-    
-    
+
+
         }
-    
-    
+
+
         function yildizSembolleriAyniMi(sembol1, sembol2) {
             sembol1 = sembol1.replace("S", "");
             sembol2 = sembol2.replace("S", "");
             return sembol1 === sembol2;
         }
-    
+
         function verileriYerDegistirmekGerekiyorMu(sembol1, sembol2) {
             let sembol1_S = sembol1.indexOf("S") != -1;
             let sembol2_S = sembol2.indexOf("S") != -1;
             return !sembol1_S && sembol2_S;
         }
-    
+
         return olcumler;
     }
 
@@ -237,11 +233,36 @@ function havaKutlesiHesapla(olcumler) {
     return olcumler;
 }
 
-function mukayeseKadirHesapla(olcumler){
+function mukayeseKadirHesapla(olcumler) {
 
-    
-    function kadirHesapla(isikSiddetiFarki){
-        return -2.5*Math.log10(Math.abs(isikSiddetiFarki))+15;
+    let sonC1katmani;
+    let sonVkatmani;
+    let kadirKatmani;
+
+    for (let i = 0; i < olcumler.length; i++) {
+
+        if (olcumler[i].yildizSembolu.indexOf("C1") != -1) {   // c1 ise
+            sonC1katmani = i;
+            kadirKatmani = 0;
+        }
+        else {
+            if (olcumler[i].yildizSembolu.indexOf("V") != -1) {
+                sonVkatmani = i;
+                kadirKatmani++;
+            }
+
+            if (sonC1katmani != null && sonVkatmani != null) {
+                filtreler.forEach(filtre => {
+
+                    olcumler[sonC1katmani][filtre]["kadir" + kadirKatmani] = kadirHesapla(olcumler[sonC1katmani][filtre].parlaklik - olcumler[sonVkatmani][filtre].parlaklik);
+                });
+            }
+        }
+    }
+
+
+    function kadirHesapla(isikSiddetiFarki) {
+        return -2.5 * Math.log10(Math.abs(isikSiddetiFarki)) + 15;
     }
 
     return olcumler;
