@@ -9,20 +9,65 @@ let
 gozlem_analiz_dugmesi.addEventListener("click", analizIslemleri);
 
 let olcumler;
+
+let dataSet_c1_kadir_havakutlesi = {};
+let dataSet_v_kadir_havakutlesi = {};
+let sonumleme_sabitleri = {};
+
 const filtreler = ['U', 'B', 'V'];
 
 function analizIslemleri() {
-    olcumler = verileriCek();                       // Girilen veriler array haline getirildi.
-    olcumler = gokParlakliklariniCikart(olcumler);  // Gök parlıkları çıkartıldı.
-    olcumler = tarihBilgisiEkle(olcumler);          // tarih bilgisi ekle
-    olcumler = yildizZamaniHesapla(olcumler);       // Yıldız zamanı hesaplandı.
-    olcumler = havaKutlesiHesapla(olcumler);        // Hava Kütlesi hesaplandı.
-    olcumler = mukayeseKadirHesapla(olcumler);      // Mukayese yıldızının kadir değerleri hesaplandı.
-    console.log(olcumler);
+    olcumler = verileriCek();                           // Girilen veriler array haline getirildi.
+    olcumler = gokParlakliklariniCikart(olcumler);      // Gök parlıkları çıkartıldı.
+    olcumler = tarihBilgisiEkle(olcumler);              // tarih bilgisi eklendi.
+    olcumler = yildizZamaniHesapla(olcumler);           // Yıldız zamanı hesaplandı.
+    olcumler = havaKutlesiHesapla(olcumler);            // Hava Kütlesi hesaplandı.
+    olcumler = mukayeseKadirHesapla(olcumler);          // Mukayese yıldızının kadir değerleri hesaplandı.
+    olcumler = degiskenYildizKadiriHesapla(olcumler);   // Değişen yıldızın kadir değerleri hesaplandı.
 
-    grafikIslemleri();
+    c1_kadir_havakutlesi_dataseti_olustur();
+    sonumlemeSabitleriniHesapla();
+    c1_kadir_havakutlesigrafigi();
+    sonumlemeSabitleriniSayfayaEkle();
+
+    olcumler = degiskenYildizAtmosferDisiKadiriHesapla(olcumler);
+    v_kadir_zaman_dataseti_olustur();
+    v_kadir_zamangrafigi();
+    console.log(olcumler);
 }
 
+function sonumlemeSabitleriniSayfayaEkle() {
+
+    filtreler.forEach(filtre => {
+        element = document.getElementById("sonumleme-" + filtre).getElementsByClassName("sonumleme-sabiti-deger")[0];
+        element.innerHTML = sonumleme_sabitleri[filtre];
+    });
+}
+function sonumlemeSabitleriniHesapla() {
+
+    filtreler.forEach(filtre => {
+        let veriSeti = dataSet_c1_kadir_havakutlesi[filtre];
+        let n = veriSeti.length;
+        let toplam_X = 0, toplam_Y = 0, toplam_XY = 0, toplam_X2 = 0;
+        veriSeti.forEach(veri => {
+            toplam_X += veri.x;
+            toplam_Y += veri.y;
+            toplam_XY += veri.x * veri.y;
+            toplam_X2 += Math.pow(veri.x, 2);
+        });
+
+        let b = ((toplam_X * toplam_XY) - (toplam_X2 * toplam_Y)) / (Math.pow(toplam_X, 2) - (toplam_X2 * n));
+        sonumleme_sabitleri[filtre] = b;
+
+    });
+
+}
+function c1_kadir_havakutlesi_dataseti_olustur() {
+    dataSet_c1_kadir_havakutlesi = {};
+    filtreler.forEach(filtre => {
+        dataSet_c1_kadir_havakutlesi[filtre] = kadir_havaKutlesi_verileriCek("C1", filtre);
+    });
+}
 
 function verileriCek() {
     let olcumler = gozlem_verileri.value.split("\n");
@@ -266,4 +311,112 @@ function mukayeseKadirHesapla(olcumler) {
     }
 
     return olcumler;
+}
+
+function degiskenYildizKadiriHesapla(olcumler) {
+
+    let sonC1katmani;
+    let sonVkatmani;
+    let kadirKatmani;
+
+    for (let i = 0; i < olcumler.length; i++) {
+
+        if (olcumler[i].yildizSembolu.indexOf("C1") != -1) {   // c1 ise
+            sonC1katmani = i;
+            kadirKatmani = 0;
+        }
+        else {
+            if (olcumler[i].yildizSembolu.indexOf("V") != -1) {
+                sonVkatmani = i;
+                kadirKatmani++;
+            }
+
+            if (sonC1katmani != null && sonVkatmani != null) {
+                filtreler.forEach(filtre => {
+                    olcumler[sonVkatmani][filtre].kadir = 2.5 * Math.log10(olcumler[sonC1katmani][filtre].parlaklik / olcumler[sonVkatmani][filtre].parlaklik) + olcumler[sonC1katmani][filtre]["kadir" + kadirKatmani];
+                });
+            }
+        }
+    }
+
+    return olcumler;
+}
+
+
+
+
+
+
+function kadir_havaKutlesi_verileriCek(sembol, filtre) {
+    let dataSet = [];
+    olcumler.forEach(olcum => {
+        if (olcum.yildizSembolu == sembol) {
+            if (sembol == "C1" && olcum[filtre].kadir1 && olcum[filtre].kadir2) {
+                dataSet.push({ x: olcum[filtre].havaKutlesi, y: olcum[filtre].kadir1 });
+                dataSet.push({ x: olcum[filtre].havaKutlesi, y: olcum[filtre].kadir2 });
+            }
+            else if (sembol == "V") {
+                dataSet.push({ x: olcum[filtre].havaKutlesi, y: olcum[filtre].kadir });
+            }
+        }
+    });
+    return dataSet;
+}
+function veriSetiEgriDataSetOlustur(veriSeti) {
+
+    let n = veriSeti.length;
+    let toplam_X = 0, toplam_Y = 0, toplam_XY = 0, toplam_X2 = 0;
+    veriSeti.forEach(veri => {
+        toplam_X += veri.x;
+        toplam_Y += veri.y;
+        toplam_XY += veri.x * veri.y;
+        toplam_X2 += Math.pow(veri.x, 2);
+    });
+
+    let b = ((toplam_X * toplam_XY) - (toplam_X2 * toplam_Y)) / (Math.pow(toplam_X, 2) - (toplam_X2 * n));
+    let a = (toplam_Y - b * n) / toplam_X;
+
+    let ilkNokta = {};
+    ilkNokta.x = veriSeti[0].x;
+    ilkNokta.y = a * ilkNokta.x + b;
+
+    let ikinciNokta = {};
+    ikinciNokta.x = veriSeti[veriSeti.length - 1].x;
+    ikinciNokta.y = a * ikinciNokta.x + b;
+
+    return [ilkNokta, ikinciNokta];
+}
+
+function degiskenYildizAtmosferDisiKadiriHesapla(olcumler) {
+    olcumler.forEach(olcum => {
+        filtreler.forEach(filtre => {
+            olcum[filtre].kadir = olcum[filtre].kadir - sonumleme_sabitleri[filtre] * olcum[filtre].havaKutlesi;
+        });
+    });
+    return olcumler;
+}
+
+function v_kadir_zaman_dataseti_olustur() {
+    dataSet_v_kadir_havakutlesi = {};
+    filtreler.forEach(filtre => {
+        dataSet_v_kadir_havakutlesi[filtre] = kadir_zaman_verileriCek("V", filtre);
+    });
+}
+function kadir_zaman_verileriCek(sembol, filtre) {
+    let dataSet = [];
+    let olcumBaslangicTarihi = new Date(olcumler[0].U.tarih+" "+olcumler[0].U.saat+" +0");
+    olcumler.forEach(olcum => {
+        if (olcum.yildizSembolu == sembol) {
+            let olcumZamani = new Date(olcum[filtre].tarih+" "+olcum[filtre].saat+" +0");
+            let gecenZaman = (olcumZamani - olcumBaslangicTarihi)/3600000;
+            dataSet.push({ x: gecenZaman, y: olcum[filtre].kadir });
+        }
+    });
+
+    function str_saate_cevir(str_saat){
+        let zaman = str_saat.split(':');
+        return parseFloat(zaman[0])+parseFloat(zaman[1])/60+parseFloat(zaman[2])/3600;
+    }
+
+    return dataSet;
 }

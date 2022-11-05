@@ -114,7 +114,7 @@
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-#grafik-kadir-havakutlesi
+#grafik-c1-kadir-havakutlesi
 {
   position:relative;
   background-color: white;
@@ -123,4 +123,63 @@
   max-width: 97%;
   left: 0%;
   visibility: hidden;
+}
+#grafik-v-kadir-havakutlesi
+{
+  position:relative;
+  background-color: white;
+  border-radius: 5px;
+  top: 80px;
+  max-width: 97%;
+  left: 0%;
+  visibility: hidden;
+}
+
+#sonumleme-sabiti-cerceve{
+  position:relative;
+  border-radius: 5px;
+  top: 8%;
+  width: 97%;
+  height: 70px;
+  font-size: 44px;
+}
+#sonumleme-U{
+  position:absolute;
+  background-color: rgba(191, 0, 255, 0.6);
+  width: 30%;
+  left: 3%;
+  height: 100%;
+  border-radius: 5px;
+}
+#sonumleme-B{
+  position:absolute;
+  background-color: rgba(0, 40, 255, 0.6);
+  width: 30%;
+  left: 35%;
+  height: 100%;
+  border-radius: 5px;
+}
+#sonumleme-V{
+  position:absolute;
+  background-color: rgba(100, 255, 40, 0.6);
+  width: 30%;
+  right: 3%;
+  height: 100%;
+  border-radius: 5px;
+}
+.sonumleme-sabiti-baslik{
+  position:relative;
+  top: 10px;
+  text-align: center;
+  font-size: 18px;
+  color: rgb(255, 255, 255);
+  max-height: 100%;
+}
+.sonumleme-sabiti-deger{
+  position:relative;
+  top: -5px;
+  text-align: center;
+  font-size: 15px;
+  color: rgb(255, 255, 255);
+  max-height: 100%;
 }

@@ -1,18 +1,17 @@
-
-function grafikCiz(dataset_U, dataset_B, dataset_V) {
+function c1_kadir_havakutlesigrafigi() {
     let egriCizgiKesikligi = [15, 5, 5, 5];
     const data = {
         datasets: [
             {
                 label: 'U Filtresi',
-                data: dataset_U,
-                borderColor: 'rgba(200, 0, 55, 1)'
+                data: dataSet_c1_kadir_havakutlesi['U'],
+                borderColor: 'rgba(190, 0, 255, 1)'
 
             }
             ,
             {
                 label: 'U Eğim Çizgisi',
-                data: veriSetiEgriDataSetOlustur(dataset_U),
+                data: veriSetiEgriDataSetOlustur(dataSet_c1_kadir_havakutlesi.U),
                 showLine: true,
                 borderColor: 'black',
                 borderWidth: 2,
@@ -25,14 +24,14 @@ function grafikCiz(dataset_U, dataset_B, dataset_V) {
             ,
             {
                 label: 'B Filtresi',
-                data: dataset_B,
+                data: dataSet_c1_kadir_havakutlesi['B'],
                 borderColor: 'rgba(0, 40, 255, 1)'
 
             }
             ,
             {
                 label: 'B Eğim Çizgisi',
-                data: veriSetiEgriDataSetOlustur(dataset_B),
+                data: veriSetiEgriDataSetOlustur(dataSet_c1_kadir_havakutlesi.B),
                 showLine: true,
                 borderColor: 'black',
                 borderWidth: 2,
@@ -45,14 +44,14 @@ function grafikCiz(dataset_U, dataset_B, dataset_V) {
             ,
             {
                 label: 'V Filtresi',
-                data: dataset_V,
+                data: dataSet_c1_kadir_havakutlesi['V'],
                 borderColor: 'rgba(100, 255, 40, 1)'
 
             }
             ,
             {
-                label: 'B Eğim Çizgisi',
-                data: veriSetiEgriDataSetOlustur(dataset_V),
+                label: 'V Eğim Çizgisi',
+                data: veriSetiEgriDataSetOlustur(dataSet_c1_kadir_havakutlesi.V),
                 showLine: true,
                 borderColor: 'black',
                 borderWidth: 2,
@@ -104,55 +103,77 @@ function grafikCiz(dataset_U, dataset_B, dataset_V) {
         }
     };
 
-    const grafikElement = document.getElementById('grafik-kadir-havakutlesi');
+    const grafikElement = document.getElementById('grafik-c1-kadir-havakutlesi');
     grafikElement.style.visibility = "visible";
     const myChart = new Chart(grafikElement, config);
-
 }
 
+function v_kadir_zamangrafigi() {
+    const data = {
+        datasets: [
+            {
+                label: 'U Filtresi',
+                data: dataSet_v_kadir_havakutlesi['U'],
+                borderColor: 'rgba(190, 0, 255, 1)'
 
-function grafikIslemleri() {
+            }
+            ,
+            {
+                label: 'B Filtresi',
+                data: dataSet_v_kadir_havakutlesi['B'],
+                borderColor: 'rgba(0, 40, 255, 1)'
 
+            }
+            ,
+            {
+                label: 'V Filtresi',
+                data: dataSet_v_kadir_havakutlesi['V'],
+                borderColor: 'rgba(100, 255, 40, 1)'
 
-    let U_dataSet = kadir_havaKutlesi_verileriCek("U");
-    let B_dataSet = kadir_havaKutlesi_verileriCek("B");
-    let V_dataSet = kadir_havaKutlesi_verileriCek("V");
+            }
+        ]
+    }
 
-    grafikCiz(U_dataSet, B_dataSet, V_dataSet);
-
-
-}
-function kadir_havaKutlesi_verileriCek(filtre) {
-    let dataSet = [];
-    olcumler.forEach(olcum => {
-        if (olcum.yildizSembolu == "C1" && olcum[filtre].kadir1 != null && olcum[filtre].kadir2 != null) {
-            dataSet.push({ x: olcum[filtre].havaKutlesi, y: olcum[filtre].kadir1 });
-            dataSet.push({ x: olcum[filtre].havaKutlesi, y: olcum[filtre].kadir2 });
+    const config = {
+        type: 'scatter',
+        data: data,
+        options: {
+            responsive: true,
+            plugins: {
+                subtitle: {
+                    display: true,
+                    text: 'Değişken Yıldıza Ait Kadir - Zaman Grafiği',
+                    padding: 5,
+                    font: {
+                        size: 15,
+                        borderColor: "red"
+                    }
+                },
+                legend: { 
+                    position: "right",
+                    labels : { boxWidth : 15 , usePointStyle : true , pointStyle : "rectRounded" , padding : 20}
+                }
+            },
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: "Geçen Süre ( saat )",
+                        font: { size: 15 }
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: "KADİR",
+                        font: { size: 15 }
+                    }
+                }
+            }
         }
-    });
-    return dataSet;
-}
-function veriSetiEgriDataSetOlustur(veriSeti) {
-    let n = veriSeti.length;
-    let toplam_X = 0, toplam_Y = 0, toplam_XY = 0, toplam_X2 = 0;
-    console.log(veriSeti);
-    veriSeti.forEach(veri => {
-        toplam_X += veri.x;
-        toplam_Y += veri.y;
-        toplam_XY += veri.x * veri.y;
-        toplam_X2 += Math.pow(veri.x, 2);
-    });
+    };
 
-    let b = ((toplam_X * toplam_XY) - (toplam_X2 * toplam_Y)) / (Math.pow(toplam_X, 2) - (toplam_X2 * n));
-    let a = (toplam_Y - b * n) / toplam_X;
-
-    let ilkNokta = {};
-    ilkNokta.x = veriSeti[0].x;
-    ilkNokta.y = a * ilkNokta.x + b;
-
-    let ikinciNokta = {};
-    ikinciNokta.x = veriSeti[veriSeti.length - 1].x;
-    ikinciNokta.y = a * ikinciNokta.x + b;
-
-    return [ilkNokta, ikinciNokta];
+    const grafikElement = document.getElementById('grafik-v-kadir-havakutlesi');
+    grafikElement.style.visibility = "visible";
+    const myChart = new Chart(grafikElement, config);
 }
