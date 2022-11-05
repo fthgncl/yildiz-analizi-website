@@ -24,14 +24,14 @@
         </div>
     </div>
 
-    <div class="split right">
+    <div id ="sagpencere" class="split right">
             <canvas id="grafik-c1-kadir-havakutlesi"></canvas>
             <div id="sonumleme-sabiti-cerceve" >
                 <div id="sonumleme-U"><p class="sonumleme-sabiti-baslik" >U Sonumleme Sabiti</p><p class="sonumleme-sabiti-deger" ></p></div>
                 <div id="sonumleme-B"><p class="sonumleme-sabiti-baslik" >B Sonumleme Sabiti</p><p class="sonumleme-sabiti-deger" ></p></div>
                 <div id="sonumleme-V"><p class="sonumleme-sabiti-baslik" >V Sonumleme Sabiti</p><p class="sonumleme-sabiti-deger" ></p></div>
             </div>
-            <canvas id="grafik-v-kadir-havakutlesi"></canvas>
+            <canvas id="grafik-v-kadir-zaman"></canvas>
     </div>
 
 </body>

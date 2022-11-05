@@ -124,7 +124,7 @@
   left: 0%;
   visibility: hidden;
 }
-#grafik-v-kadir-havakutlesi
+#grafik-v-kadir-zaman
 {
   position:relative;
   background-color: white;
@@ -142,6 +142,7 @@
   width: 97%;
   height: 70px;
   font-size: 44px;
+  visibility: hidden;
 }
 #sonumleme-U{
   position:absolute;

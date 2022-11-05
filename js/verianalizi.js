@@ -15,7 +15,6 @@ let dataSet_v_kadir_havakutlesi = {};
 let sonumleme_sabitleri = {};
 
 const filtreler = ['U', 'B', 'V'];
-
 function analizIslemleri() {
     olcumler = verileriCek();                           // Girilen veriler array haline getirildi.
     olcumler = gokParlakliklariniCikart(olcumler);      // Gök parlıkları çıkartıldı.
@@ -24,6 +23,8 @@ function analizIslemleri() {
     olcumler = havaKutlesiHesapla(olcumler);            // Hava Kütlesi hesaplandı.
     olcumler = mukayeseKadirHesapla(olcumler);          // Mukayese yıldızının kadir değerleri hesaplandı.
     olcumler = degiskenYildizKadiriHesapla(olcumler);   // Değişen yıldızın kadir değerleri hesaplandı.
+
+    grafikNesneleriniOlustur();
 
     c1_kadir_havakutlesi_dataseti_olustur();
     sonumlemeSabitleriniHesapla();
@@ -35,13 +36,22 @@ function analizIslemleri() {
     v_kadir_zamangrafigi();
     console.log(olcumler);
 }
-
+function grafikNesneleriniOlustur(){
+    const element = document.getElementById("sagpencere");
+    element.innerHTML += '<canvas id="grafik-c1-kadir-havakutlesi"></canvas>';
+    element.innerHTML += '<div id="sonumleme-sabiti-cerceve">';
+    element.innerHTML += '<div id="sonumleme-U"><p class="sonumleme-sabiti-baslik">U Sonumleme Sabiti</p><p class="sonumleme-sabiti-deger"></p></div>';
+    element.innerHTML += '<div id="sonumleme-B"><p class="sonumleme-sabiti-baslik">B Sonumleme Sabiti</p><p class="sonumleme-sabiti-deger"></p></div>';
+    element.innerHTML += '<div id="sonumleme-V"><p class="sonumleme-sabiti-baslik">V Sonumleme Sabiti</p><p class="sonumleme-sabiti-deger"></p></div>';
+    element.innerHTML += '</div><canvas id="grafik-v-kadir-zaman"></canvas>';
+}
 function sonumlemeSabitleriniSayfayaEkle() {
 
     filtreler.forEach(filtre => {
         element = document.getElementById("sonumleme-" + filtre).getElementsByClassName("sonumleme-sabiti-deger")[0];
         element.innerHTML = sonumleme_sabitleri[filtre];
     });
+    document.getElementById('sonumleme-sabiti-cerceve').style.visibility = "visible";
 }
 function sonumlemeSabitleriniHesapla() {
 
@@ -222,6 +232,7 @@ function tarihBilgisiEkle(olcumler) {
 
             let tarih = new Date(gozlem_baslangic_tarihi.value);
             tarih.setDate(tarih.getDate() + gecenGunSayisi);
+            tarih.setMonth(tarih.getMonth() + 1);
 
             olcum[filtre].tarih = tarih.getFullYear() + "-" + tarih.getMonth() + "-" + tarih.getDate();
         });
@@ -264,7 +275,7 @@ function havaKutlesiHesapla(olcumler) {
 
     olcumler.forEach(olcum => {
         filtreler.forEach(filtre => {
-            olcum[filtre].havaKutlesi = 1 / (aci_sin(enlem_gozlemYeri) * aci_sin(enlem_mukayeseYildizi) + aci_cos(enlem_gozlemYeri) * aci_cos(enlem_mukayeseYildizi) * aci_cos(olcum[filtre].yildizZamani));
+            olcum[filtre].havaKutlesi = 1 / (aci_sin(enlem_gozlemYeri) * aci_sin(enlem_mukayeseYildizi) + aci_cos(enlem_gozlemYeri) * aci_cos(enlem_mukayeseYildizi) * aci_cos(olcum[filtre].yildizZamani*15));
         });
     });
 

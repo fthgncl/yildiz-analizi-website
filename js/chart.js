@@ -1,3 +1,6 @@
+let grafik_v_kadir_zaman, grafik_c1_kadir_havakutlesi;
+
+
 function c1_kadir_havakutlesigrafigi() {
     let egriCizgiKesikligi = [15, 5, 5, 5];
     const data = {
@@ -79,9 +82,9 @@ function c1_kadir_havakutlesigrafigi() {
                         borderColor: "red"
                     }
                 },
-                legend: { 
+                legend: {
                     position: "right",
-                    labels : { boxWidth : 15 , usePointStyle : true , pointStyle : "rectRounded" , padding : 20}
+                    labels: { boxWidth: 15, usePointStyle: true, pointStyle: "rectRounded", padding: 20 }
                 }
             },
             scales: {
@@ -104,10 +107,9 @@ function c1_kadir_havakutlesigrafigi() {
     };
 
     const grafikElement = document.getElementById('grafik-c1-kadir-havakutlesi');
-    grafikElement.style.visibility = "visible";
-    const myChart = new Chart(grafikElement, config);
+    grafikElement.style.visibility = "visible";    
+    grafik_c1_kadir_havakutlesi = new Chart(grafikElement, config);
 }
-
 function v_kadir_zamangrafigi() {
     const data = {
         datasets: [
@@ -149,9 +151,9 @@ function v_kadir_zamangrafigi() {
                         borderColor: "red"
                     }
                 },
-                legend: { 
+                legend: {
                     position: "right",
-                    labels : { boxWidth : 15 , usePointStyle : true , pointStyle : "rectRounded" , padding : 20}
+                    labels: { boxWidth: 15, usePointStyle: true, pointStyle: "rectRounded", padding: 20 }
                 }
             },
             scales: {
@@ -173,7 +175,7 @@ function v_kadir_zamangrafigi() {
         }
     };
 
-    const grafikElement = document.getElementById('grafik-v-kadir-havakutlesi');
+    const grafikElement = document.getElementById('grafik-v-kadir-zaman');
     grafikElement.style.visibility = "visible";
-    const myChart = new Chart(grafikElement, config);
+    grafik_v_kadir_zaman = new Chart(grafikElement, config);
 }
