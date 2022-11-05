@@ -22,12 +22,12 @@ function analizIslemleri() {
     olcumler = yildizZamaniHesapla(olcumler);           // Yıldız zamanı hesaplandı.
     olcumler = havaKutlesiHesapla(olcumler);            // Hava Kütlesi hesaplandı.
     olcumler = mukayeseKadirHesapla(olcumler);          // Mukayese yıldızının kadir değerleri hesaplandı.
+    c1_kadir_havakutlesi_dataseti_olustur();
+    sonumlemeSabitleriniHesapla();
     olcumler = degiskenYildizKadiriHesapla(olcumler);   // Değişen yıldızın kadir değerleri hesaplandı.
 
     grafikNesneleriniOlustur();
 
-    c1_kadir_havakutlesi_dataseti_olustur();
-    sonumlemeSabitleriniHesapla();
     c1_kadir_havakutlesigrafigi();
     sonumlemeSabitleriniSayfayaEkle();
 
@@ -67,7 +67,9 @@ function sonumlemeSabitleriniHesapla() {
         });
 
         let b = ((toplam_X * toplam_XY) - (toplam_X2 * toplam_Y)) / (Math.pow(toplam_X, 2) - (toplam_X2 * n));
-        sonumleme_sabitleri[filtre] = b;
+        let a = (toplam_Y - b * n) / toplam_X;
+        sonumleme_sabitleri[filtre] = a;
+        
 
     });
 

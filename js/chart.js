@@ -89,6 +89,7 @@ function c1_kadir_havakutlesigrafigi() {
             },
             scales: {
                 x: {
+                    ticks: { mirror : true },
                     title: {
                         display: true,
                         text: "HAVA KÜTLESİ",
