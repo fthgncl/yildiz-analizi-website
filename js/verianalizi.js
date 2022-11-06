@@ -16,14 +16,14 @@ let sonumleme_sabitleri = {};
 
 const filtreler = ['U', 'B', 'V'];
 function analizIslemleri() {
-    olcumler = verileriCek();                           // Girilen veriler array haline getirildi.
-    olcumler = gokParlakliklariniCikart(olcumler);      // Gök parlıkları çıkartıldı.
-    olcumler = tarihBilgisiEkle(olcumler);              // tarih bilgisi eklendi.
-    olcumler = yildizZamaniHesapla(olcumler);           // Yıldız zamanı hesaplandı.
-    olcumler = havaKutlesiHesapla(olcumler);            // Hava Kütlesi hesaplandı.
-    olcumler = mukayeseKadirHesapla(olcumler);          // Mukayese yıldızının kadir değerleri hesaplandı.
-    c1_kadir_havakutlesi_dataseti_olustur();
-    sonumlemeSabitleriniHesapla();
+    olcumler = verileriCek();                           // ASTRONOMİ : Girilen veriler array haline getirildi.
+    olcumler = gokParlakliklariniCikart(olcumler);      // ASTRONOMİ : Gök parlıkları çıkartıldı.
+    olcumler = tarihBilgisiEkle(olcumler);              // ASTRONOMİ : tarih bilgisi eklendi.
+    olcumler = yildizZamaniHesapla(olcumler);           // ASTRONOMİ : Yıldız zamanı hesaplandı.
+    olcumler = havaKutlesiHesapla(olcumler);            // ASTRONOMİ : Hava Kütlesi hesaplandı.
+    olcumler = mukayeseKadirHesapla(olcumler);          // ASTRONOMİ : Mukayese yıldızının kadir değerleri hesaplandı.
+    c1_kadir_havakutlesi_dataseti_olustur();                // PROGRAMLAMA : veriler grafiğe aktarılmak üzere bir değişkene atandı.
+    sonumlemeSabitleriniHesapla();                      // ASTRONOMİ : Sönümleme sabitleri hesaplandı.
     olcumler = degiskenYildizKadiriHesapla(olcumler);   // Değişen yıldızın kadir değerleri hesaplandı.
 
     grafikNesneleriniOlustur();
