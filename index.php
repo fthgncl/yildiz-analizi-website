@@ -18,20 +18,22 @@
     <?php addSideBar(); ?>
     <h1 class="ustBaslik">Yıldız Analiz Formu</h1>
 
-    <div class="split left">
+    <div id = "solpencere" class="split left">
         <div>
             <?php includePhpFile("form.php"); ?>
         </div>
     </div>
 
     <div id ="sagpencere" class="split right">
-            <canvas id="grafik-c1-kadir-havakutlesi"></canvas>
-            <div id="sonumleme-sabiti-cerceve" >
-                <div id="sonumleme-U"><p class="sonumleme-sabiti-baslik" >U Sonumleme Sabiti</p><p class="sonumleme-sabiti-deger" ></p></div>
-                <div id="sonumleme-B"><p class="sonumleme-sabiti-baslik" >B Sonumleme Sabiti</p><p class="sonumleme-sabiti-deger" ></p></div>
-                <div id="sonumleme-V"><p class="sonumleme-sabiti-baslik" >V Sonumleme Sabiti</p><p class="sonumleme-sabiti-deger" ></p></div>
+            <div id = "analiz-sonuclari">
+                <canvas id="grafik-c1-kadir-havakutlesi"></canvas>
+                <div id="sonumleme-sabiti-cerceve" >
+                    <div id="sonumleme-U"><p class="sonumleme-sabiti-baslik" >U Sonumleme Sabiti</p><p class="sonumleme-sabiti-deger" ></p></div>
+                    <div id="sonumleme-B"><p class="sonumleme-sabiti-baslik" >B Sonumleme Sabiti</p><p class="sonumleme-sabiti-deger" ></p></div>
+                    <div id="sonumleme-V"><p class="sonumleme-sabiti-baslik" >V Sonumleme Sabiti</p><p class="sonumleme-sabiti-deger" ></p></div>
+                </div>
+                <canvas id="grafik-v-kadir-zaman"></canvas>
             </div>
-            <canvas id="grafik-v-kadir-zaman"></canvas>
     </div>
 
 </body>

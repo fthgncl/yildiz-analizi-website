@@ -26,15 +26,15 @@ function analizIslemleri() {
     sonumlemeSabitleriniSayfayaEkle();
     c1_grafik_ciz();
     v_grafik_ciz();
-    
+
     tasarimDegisiklikleriUygula();
     console.log(olcumler);
 }
-function c1_grafik_ciz(){
+function c1_grafik_ciz() {
     let dataSet_c1_kadir_havakutlesi = c1_kadir_havakutlesi_dataseti_olustur();
     c1_kadir_havakutlesigrafigi(dataSet_c1_kadir_havakutlesi);
 }
-function v_grafik_ciz(){
+function v_grafik_ciz() {
     let dataSet_c1_kadir_havakutlesi = v_kadir_zaman_dataseti_olustur();
     v_kadir_zamangrafigi(dataSet_c1_kadir_havakutlesi);
 }
@@ -62,7 +62,7 @@ function sonumlemeSabitleriniHesapla() {
         let b = ((toplam_X * toplam_XY) - (toplam_X2 * toplam_Y)) / (Math.pow(toplam_X, 2) - (toplam_X2 * n));
         let a = (toplam_Y - b * n) / toplam_X;
         sonumleme_sabitleri[filtre] = a;
-        
+
 
     });
 
@@ -271,7 +271,7 @@ function havaKutlesiHesapla() {
 
     olcumler.forEach(olcum => {
         filtreler.forEach(filtre => {
-            olcum[filtre].havaKutlesi = 1 / (aci_sin(enlem_gozlemYeri) * aci_sin(enlem_mukayeseYildizi) + aci_cos(enlem_gozlemYeri) * aci_cos(enlem_mukayeseYildizi) * aci_cos(olcum[filtre].yildizZamani*15));
+            olcum[filtre].havaKutlesi = 1 / (aci_sin(enlem_gozlemYeri) * aci_sin(enlem_mukayeseYildizi) + aci_cos(enlem_gozlemYeri) * aci_cos(enlem_mukayeseYildizi) * aci_cos(olcum[filtre].yildizZamani * 15));
         });
     });
 
@@ -412,23 +412,47 @@ function v_kadir_zaman_dataseti_olustur() {
 }
 function kadir_zaman_verileriCek(sembol, filtre) {
     let dataSet = [];
-    let olcumBaslangicTarihi = new Date(olcumler[0].U.tarih+" "+olcumler[0].U.saat+" +0");
+    let olcumBaslangicTarihi = new Date(olcumler[0].U.tarih + " " + olcumler[0].U.saat + " +0");
     olcumler.forEach(olcum => {
         if (olcum.yildizSembolu == sembol) {
-            let olcumZamani = new Date(olcum[filtre].tarih+" "+olcum[filtre].saat+" +0");
-            let gecenZaman = (olcumZamani - olcumBaslangicTarihi)/3600000;
+            let olcumZamani = new Date(olcum[filtre].tarih + " " + olcum[filtre].saat + " +0");
+            let gecenZaman = (olcumZamani - olcumBaslangicTarihi) / 3600000;
             dataSet.push({ x: gecenZaman, y: olcum[filtre].kadir });
         }
     });
 
-    function str_saate_cevir(str_saat){
+    function str_saate_cevir(str_saat) {
         let zaman = str_saat.split(':');
-        return parseFloat(zaman[0])+parseFloat(zaman[1])/60+parseFloat(zaman[2])/3600;
+        return parseFloat(zaman[0]) + parseFloat(zaman[1]) / 60 + parseFloat(zaman[2]) / 3600;
     }
 
     return dataSet;
 }
-function tasarimDegisiklikleriUygula(){
+function tasarimDegisiklikleriUygula() {
     const sonuclarElement = document.getElementById("analiz-sonuclari");
     sonuclarElement.style.visibility = "visible";
+
+    const solpencere = document.getElementById("solpencere");
+    console.log(classControl(solpencere));
+    if (classControl(solpencere))
+        solpencere.classList.toggle("left-sonra");
+
+    const sagPencere = document.getElementById("sagpencere");
+    if (classControl(sagPencere))
+        sagPencere.classList.toggle("right-sonra");
+
+    const formCerceve = document.getElementById("formCerceve");
+    if (classControl(formCerceve))
+        formCerceve.classList.toggle("formCerceve-sonra");
+
+    function classControl(element) {
+
+        let durum = true;
+        element.classList.forEach(classes => {
+            if (classes.indexOf("sonra") != -1) {
+                durum = false;
+            }
+        });
+        return durum;
+    }
 }

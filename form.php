@@ -1,4 +1,4 @@
-<div class="formCerceve">
+<div id = "formCerceve" class="formCerceve">
     <div id="veri_analiz_formu" name="veri_analiz_formu" method="post">
         <div class="mb-5 row">
             <div class="col">
