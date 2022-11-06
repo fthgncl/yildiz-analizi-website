@@ -48,7 +48,7 @@
 
 /* Split the screen in half */
 .split {
-  height: 900px;
+  height: 1900px;
   width: 50%;
   position: absolute;
   top: 50px;
@@ -105,44 +105,41 @@
 }
 
 .formCerceve {
-  position:relative;
+  position: absolute;
   left: 10%;
   width: 80%;
   height: 700px;
-  top: 60px;
+  top: 5%;
   border-radius: 50px;
   background-color: rgba(0, 0, 0, 0.4);
 }
 
 #grafik-c1-kadir-havakutlesi
 {
-  position:relative;
+  position: absolute;
   background-color: white;
   border-radius: 5px;
-  top: 60px;
+  top: 5%;
   max-width: 97%;
   left: 0%;
-  visibility: hidden;
 }
 #grafik-v-kadir-zaman
 {
-  position:relative;
+  position: absolute;
   background-color: white;
   border-radius: 5px;
-  top: 80px;
+  top: 32%;
   max-width: 97%;
   left: 0%;
-  visibility: hidden;
 }
 
 #sonumleme-sabiti-cerceve{
-  position:relative;
+  position: absolute;
   border-radius: 5px;
-  top: 8%;
+  top: 27.4%;
   width: 97%;
   height: 70px;
   font-size: 44px;
-  visibility: hidden;
 }
 #sonumleme-U{
   position:absolute;
@@ -183,4 +180,7 @@
   font-size: 15px;
   color: rgb(255, 255, 255);
   max-height: 100%;
+}
+#analiz-sonuclari{
+  visibility: hidden;
 }
