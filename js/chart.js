@@ -1,20 +1,19 @@
 let grafik_v_kadir_zaman, grafik_c1_kadir_havakutlesi;
 
-
-function c1_kadir_havakutlesigrafigi() {
+function c1_kadir_havakutlesigrafigi(veri) {
     let egriCizgiKesikligi = [15, 5, 5, 5];
     const data = {
         datasets: [
             {
                 label: 'U Filtresi',
-                data: dataSet_c1_kadir_havakutlesi['U'],
+                data: veri['U'],
                 borderColor: 'rgba(190, 0, 255, 1)'
 
             }
             ,
             {
                 label: 'U Eğim Çizgisi',
-                data: veriSetiEgriDataSetOlustur(dataSet_c1_kadir_havakutlesi.U),
+                data: veriSetiEgriDataSetOlustur(veri.U),
                 showLine: true,
                 borderColor: 'black',
                 borderWidth: 2,
@@ -27,14 +26,14 @@ function c1_kadir_havakutlesigrafigi() {
             ,
             {
                 label: 'B Filtresi',
-                data: dataSet_c1_kadir_havakutlesi['B'],
+                data: veri['B'],
                 borderColor: 'rgba(0, 40, 255, 1)'
 
             }
             ,
             {
                 label: 'B Eğim Çizgisi',
-                data: veriSetiEgriDataSetOlustur(dataSet_c1_kadir_havakutlesi.B),
+                data: veriSetiEgriDataSetOlustur(veri.B),
                 showLine: true,
                 borderColor: 'black',
                 borderWidth: 2,
@@ -47,14 +46,14 @@ function c1_kadir_havakutlesigrafigi() {
             ,
             {
                 label: 'V Filtresi',
-                data: dataSet_c1_kadir_havakutlesi['V'],
+                data: veri['V'],
                 borderColor: 'rgba(100, 255, 40, 1)'
 
             }
             ,
             {
                 label: 'V Eğim Çizgisi',
-                data: veriSetiEgriDataSetOlustur(dataSet_c1_kadir_havakutlesi.V),
+                data: veriSetiEgriDataSetOlustur(veri.V),
                 showLine: true,
                 borderColor: 'black',
                 borderWidth: 2,
@@ -89,7 +88,6 @@ function c1_kadir_havakutlesigrafigi() {
             },
             scales: {
                 x: {
-                    ticks: { mirror : true },
                     title: {
                         display: true,
                         text: "HAVA KÜTLESİ",
@@ -106,31 +104,35 @@ function c1_kadir_havakutlesigrafigi() {
             }
         }
     };
-
-    const grafikElement = document.getElementById('grafik-c1-kadir-havakutlesi');
-    grafikElement.style.visibility = "visible";    
-    grafik_c1_kadir_havakutlesi = new Chart(grafikElement, config);
+    if (grafik_c1_kadir_havakutlesi == null) {
+        const grafikElement = document.getElementById('grafik-c1-kadir-havakutlesi');
+        grafik_c1_kadir_havakutlesi = new Chart(grafikElement, config);
+    }
+    else {
+        Object.assign(grafik_c1_kadir_havakutlesi.config, config);
+        grafik_c1_kadir_havakutlesi.update();
+    }
 }
-function v_kadir_zamangrafigi() {
+function v_kadir_zamangrafigi(veri) {
     const data = {
         datasets: [
             {
                 label: 'U Filtresi',
-                data: dataSet_v_kadir_havakutlesi['U'],
+                data: veri['U'],
                 borderColor: 'rgba(190, 0, 255, 1)'
 
             }
             ,
             {
                 label: 'B Filtresi',
-                data: dataSet_v_kadir_havakutlesi['B'],
+                data: veri['B'],
                 borderColor: 'rgba(0, 40, 255, 1)'
 
             }
             ,
             {
                 label: 'V Filtresi',
-                data: dataSet_v_kadir_havakutlesi['V'],
+                data: veri['V'],
                 borderColor: 'rgba(100, 255, 40, 1)'
 
             }
@@ -176,7 +178,12 @@ function v_kadir_zamangrafigi() {
         }
     };
 
-    const grafikElement = document.getElementById('grafik-v-kadir-zaman');
-    grafikElement.style.visibility = "visible";
-    grafik_v_kadir_zaman = new Chart(grafikElement, config);
+    if (grafik_v_kadir_zaman == null) {
+        const grafikElement = document.getElementById('grafik-v-kadir-zaman');
+        grafik_v_kadir_zaman = new Chart(grafikElement, config);
+    }
+    else {
+        Object.assign(grafik_v_kadir_zaman.config, config);
+        grafik_v_kadir_zaman.update();
+    }
 }
